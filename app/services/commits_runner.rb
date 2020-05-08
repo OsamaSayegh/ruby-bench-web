@@ -23,7 +23,7 @@ module CommitsRunner
         message: commit['commit']['message'],
         repo: repo,
         url: commit['html_url'],
-        created_at: commit['commit']['author']['date'],
+        created_at: commit['commit']['committer']['date'],
         author_name: commit['commit']['author']['name']
       }
     end

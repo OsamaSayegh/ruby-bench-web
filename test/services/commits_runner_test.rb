@@ -33,8 +33,10 @@ class CommitsRunnerTest < ActiveSupport::TestCase
         'sha' => "abcd#{n}",
         'commit' => {
           'message' => 'My beautiful commit message',
-          'author' => {
+          'committer' => {
             'date' => 12345,
+          },
+          'author' => {
             'name' => 'bmarkons'
           }
         },
@@ -61,8 +63,10 @@ class CommitsRunnerTest < ActiveSupport::TestCase
         'sha' => '12345',
         'commit' => {
           'message' => 'My beautiful commit message',
-          'author' => {
+          'committer' => {
             'date' => 12345,
+          },
+          'author' => {
             'name' => 'bmarkons'
           }
         },
@@ -85,7 +89,7 @@ class CommitsRunnerTest < ActiveSupport::TestCase
       assert_equal @repo.id, commit.repo.id
       assert_equal @repo.name, commit.repo.name
       assert_equal commit_hash['url'] || commit_hash['html_url'], commit.url
-      refute_equal commit_hash['timestamp'] || commit_hash['commit']['author']['date'], commit.created_at
+      refute_equal commit_hash['timestamp'] || commit_hash['commit']['committer']['date'], commit.created_at
     end
   end
 end
