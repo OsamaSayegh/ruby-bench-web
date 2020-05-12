@@ -14,13 +14,13 @@ class BenchmarkRun < ApplicationRecord
   # FIXME: Remove this and order by Commit#created_at
   default_scope { order("#{self.table_name}.created_at DESC") }
 
-  scope :fetch_commit_benchmark_runs, ->(form_result_type, benchmark_result_type, limit) {
+  scope :fetch_commit_benchmark_runs, ->(benchmark, benchmark_result_type, limit) {
     unscope(:order)
       .joins(:benchmark_type)
       .joins('INNER JOIN commits ON commits.id = benchmark_runs.initiator_id')
       .includes(:initiator)
       .where(
-        benchmark_types: { category: form_result_type },
+        benchmark_types: { id: benchmark.id },
         benchmark_result_type: benchmark_result_type,
         initiator_type: 'Commit',
         validity: true

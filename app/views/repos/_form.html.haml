@@ -7,11 +7,11 @@
           = t('repos.select_benchmark')
 
         - @rubybench_benchmarks.each do |benchmark|
-          %option{ value: benchmark.category, selected: @benchmark.present? && @benchmark.category == benchmark.category }
+          %option{ value: benchmark.id, selected: @benchmark.present? && @benchmark.id == benchmark.id }
             = benchmark.category
 
         - @users_benchmarks.each do |benchmark|
-          %option{ value: benchmark.category, selected: @benchmark.present? && @benchmark.category == benchmark.category }
+          %option{ value: benchmark.id, selected: @benchmark.present? && @benchmark.id == benchmark.id }
             = t('repos.user_scripts', name: benchmark.category)
     - if name == 'commits'
       .input-group

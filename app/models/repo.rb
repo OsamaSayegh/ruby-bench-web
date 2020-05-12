@@ -20,7 +20,7 @@ class Repo < ApplicationRecord
     self.benchmark_types.map do |benchmark_type|
       benchmark_type.benchmark_result_types.each do |benchmark_result_type|
         benchmark_runs = BenchmarkRun.select(:initiator_id, :result, :initiator_type).fetch_commit_benchmark_runs(
-          benchmark_type.category,
+          benchmark_type,
           benchmark_result_type,
           2000
         )

@@ -123,7 +123,7 @@ class CompareBenchmarks < AcceptanceTest
     visit commits_path(
       organization_name: @rails_org.name,
       repo_name: @rails_repo.name,
-      result_type: @active_record_scope_all.category,
+      result_type: @active_record_scope_all.id,
       compare_with: @sequel_scope_all.category
     )
 

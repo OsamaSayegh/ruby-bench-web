@@ -55,7 +55,7 @@ class ViewBenchmarkGraphsTest < AcceptanceTest
       URI.parse(page.current_url).request_uri,
       "/#{org.name}" \
       "/#{repo.name}/commits?result_type=" \
-      "#{benchmark_type.category}&display_count=#{BenchmarkRun::DEFAULT_PAGINATE_COUNT}"
+      "#{benchmark_type.id}&display_count=#{BenchmarkRun::DEFAULT_PAGINATE_COUNT}"
     )
   end
 
@@ -118,7 +118,7 @@ class ViewBenchmarkGraphsTest < AcceptanceTest
 
     within '#benchmark_run_benchmark_type' do
       list = all('option')
-      assert_equal(list.map(&:value), ['', 'b', 'c', 'd'])
+      assert_equal(list.map(&:value), [nil, bm_type2.id, bm_type3.id, bm_type.id].map(&:to_s))
     end
   end
 
@@ -163,7 +163,7 @@ class ViewBenchmarkGraphsTest < AcceptanceTest
     assert_equal(
       URI.parse(page.current_url).request_uri,
       "/#{org.name}" \
-      "/#{repo.name}/releases?result_type=#{benchmark_type.category}"
+      "/#{repo.name}/releases?result_type=#{benchmark_type.id}"
     )
   end
 
@@ -212,7 +212,7 @@ class ViewBenchmarkGraphsTest < AcceptanceTest
     assert_equal(
       URI.parse(page.current_url).request_uri,
       "/#{org.name}" \
-      "/#{repo.name}/releases?result_type=#{benchmark_type.category}"
+      "/#{repo.name}/releases?result_type=#{benchmark_type.id}"
     )
   end
 
@@ -221,9 +221,11 @@ class ViewBenchmarkGraphsTest < AcceptanceTest
 
     repo = create(:repo)
     org = repo.organization
-    category = create(:benchmark_type, repo: repo).category
+    benchmark = create(:benchmark_type, repo: repo)
+    id = benchmark.id
+    category = benchmark.category
 
-    visit releases_path(organization_name: org.name, repo_name: repo.name, result_type: category)
+    visit releases_path(organization_name: org.name, repo_name: repo.name, result_type: id)
 
     within '#benchmark_run_benchmark_type' do
       select(category)
